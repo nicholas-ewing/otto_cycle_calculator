@@ -5,7 +5,7 @@ import pyqtgraph as pg
 
 from ui import MainWindow
 
-APP_VERSION = "v1.0.0"
+APP_VERSION = "v1.0.1"
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

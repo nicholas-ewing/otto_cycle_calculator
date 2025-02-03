@@ -544,6 +544,8 @@ class MainWindow(QtWidgets.QMainWindow):
         # Create a plot window
         self.graph_window = pg.plot(*combined_data, title="Otto Cycle", labels={"left": "Pressure (psi)", "bottom": "Volume (in^3)"}, pen=(59, 166, 237), antialias=True, skipFiniteCheck=True)
         self.graph_window.setWindowIcon(QtGui.QIcon(get_file_path("assets/Trine.ico")))
+        
+        self.graph_window.closeEvent = self.handle_graph_window_close
     
     def handle_save_results_action(self) -> None:
         if not self.calculated:
@@ -661,6 +663,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.calculated = False
         self.save_results_action.setEnabled(False)
         self.graph_button.setEnabled(False)
+    
+    def handle_graph_window_close(self, event: QtGui.QCloseEvent) -> None:    
+        pg.PlotWidget.closeEvent(self.graph_window, event)
+        
+        self.graph_window = None
     
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
         if self.graph_window is not None:
